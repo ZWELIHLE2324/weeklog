@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WeekLog — Weekly Work Journal</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tabler Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+
+  <!-- App styles -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon"><i class="ti ti-notebook"></i></div>
+      <span class="logo-text">WeekLog</span>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-label">Journal</div>
+      <div class="nav-item active" data-panel="log"><i class="ti ti-pencil"></i> Log entry</div>
+      <div class="nav-item" data-panel="week"><i class="ti ti-calendar-week"></i> Week view <span class="badge" id="entry-count-badge">12</span></div>
+      <div class="nav-label" style="margin-top:8px">Output</div>
+      <div class="nav-item" data-panel="report"><i class="ti ti-sparkles"></i> Draft report</div>
+      <div class="nav-item" data-panel="pdf"><i class="ti ti-file-type-pdf"></i> PDF export</div>
+      <div class="nav-label" style="margin-top:8px">Settings</div>
+      <div class="nav-item" data-panel="sched"><i class="ti ti-clock"></i> Schedule</div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div style="font-weight:500;color:var(--text-secondary);margin-bottom:2px">Thabo Nkosi</div>
+      <div>Engineering Team</div>
+      <div id="entry-count-sidebar" style="margin-top:6px">12 entries logged</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-title" id="panel-title">Log an entry</div>
+        <div class="topbar-sub" id="panel-sub">Entries auto-save as you go</div>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn" onclick="document.getElementById('entry-input').focus()">
+          <i class="ti ti-plus"></i> New entry
+        </button>
+      </div>
+    </header>
+
+    <div class="scroll">
+
+      <!-- PANEL: LOG -->
+      <div class="panel active" id="panel-log">
+        <div class="quick-add">
+          <input type="text" id="entry-input" placeholder="What did you work on? (Enter to save)" autocomplete="off" />
+          <button class="btn btn-primary" id="add-btn"><i class="ti ti-plus"></i> Add</button>
+        </div>
+        <div class="chips">
+          <span class="chips-label">Status:</span>
+          <button class="chip selected" data-type="done">✓ Done</button>
+          <button class="chip" data-type="prog">⟳ In progress</button>
+          <button class="chip" data-type="block">✕ Blocked</button>
+          <button class="chip" data-type="meet">⬡ Meeting</button>
+        </div>
+        <div class="entry-list" id="entry-list"></div>
+      </div>
+
+      <!-- PANEL: WEEK VIEW -->
+      <div class="panel" id="panel-week">
+        <div class="day-strip">
+          <div class="day-pill has-entries">
+            <div class="day-pill-name">Mon</div>
+            <div class="day-pill-count" id="wc-mon">4</div>
+          </div>
+          <div class="day-pill has-entries">
+            <div class="day-pill-name">Tue</div>
+            <div class="day-pill-count" id="wc-tue">3</div>
+          </div>
+          <div class="day-pill has-entries today">
+            <div class="day-pill-name">Wed</div>
+            <div class="day-pill-count" id="wc-wed">5</div>
+          </div>
+          <div class="day-pill">
+            <div class="day-pill-name">Thu</div>
+            <div class="day-pill-count">—</div>
+          </div>
+          <div class="day-pill">
+            <div class="day-pill-name">Fri</div>
+            <div class="day-pill-count">—</div>
+          </div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-number" id="stat-total" style="color:var(--indigo-dark)">12</div>
+            <div class="stat-label">Total entries</div>
+            <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="stat-done" style="color:var(--emerald-dark)">8</div>
+            <div class="stat-label">Completed</div>
+            <div class="progress-bar"><div class="progress-fill" style="width:66%;background:var(--emerald)"></div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="stat-block" style="color:var(--danger)">1</div>
+            <div class="stat-label">Blocked</div>
+            <div class="progress-bar"><div class="progress-fill" style="width:8%;background:var(--danger)"></div></div>
+          </div>
+        </div>
+
+        <div id="week-entries"></div>
+      </div>
+
+      <!-- PANEL: DRAFT REPORT -->
+      <div class="panel" id="panel-report">
+        <div class="draft-box">
+          <div class="draft-head">
+            <div class="draft-title">Weekly journal — w/e 15 May 2026</div>
+            <span class="ai-badge" id="ai-badge"><i class="ti ti-sparkles"></i> AI drafted</span>
+          </div>
+          <div class="draft-body" id="draft-body">
+            <strong>This week I focused on three main areas:</strong><br><br>
+            On Monday I completed the Q2 data model review with Lebo and resolved a critical
+            production login timeout issue via hotfix. Tuesday was dedicated to the dashboard
+            redesign — wireframes are complete and now awaiting brand approval. Wednesday I
+            picked up the vendor API integration, which is currently blocked pending sandbox
+            credentials from the vendor; I've followed up and expect a response by end of week.<br><br>
+            <strong>Highlights:</strong> 8 tasks completed, 3 in progress, 1 blocked.<br>
+            <strong>Next week:</strong> Resolve API blocker, finalise dashboard designs, begin Q2 reporting prep.
+          </div>
+          <div class="draft-actions">
+            <button class="btn btn-primary" id="regen-btn"><i class="ti ti-sparkles"></i> Regenerate with Claude</button>
+            <button class="btn" id="goto-pdf-btn"><i class="ti ti-file-type-pdf"></i> Export to PDF</button>
+            <button class="btn" id="copy-btn"><i class="ti ti-copy"></i> Copy</button>
+          </div>
+        </div>
+        <p class="hint">Draft is generated from all logged entries. The more you log, the richer the report.</p>
+      </div>
+
+      <!-- PANEL: PDF EXPORT -->
+      <div class="panel" id="panel-pdf">
+        <div class="pdf-banner">
+          <div class="pdf-banner-title"><i class="ti ti-calendar-check"></i> Friday auto-publish is on</div>
+          <div class="pdf-banner-sub">Every Friday at 5:00 PM, a PDF report is automatically generated from your entries and emailed to your manager. No action needed from you.</div>
+          <div class="pdf-banner-actions">
+            <button class="btn btn-success" id="gen-btn"><i class="ti ti-download"></i> Generate &amp; download now</button>
+            <button class="btn" id="preview-btn"><i class="ti ti-eye"></i> Preview</button>
+          </div>
+        </div>
+
+        <div class="pdf-preview-wrap">
+          <div class="pdf-preview-head">PDF preview</div>
+          <div class="pdf-preview-body">
+            <div class="pdf-card">
+              <div class="pdf-card-header">
+                <div>
+                  <div class="pdf-card-title">Weekly Work Journal</div>
+                  <div class="pdf-card-week">Week ending Friday, 15 May 2026</div>
+                </div>
+                <div>
+                  <div class="pdf-card-name" id="pdf-name">Thabo Nkosi</div>
+                  <div class="pdf-card-team">Engineering Team</div>
+                </div>
+              </div>
+              <div style="margin-bottom:10px">
+                <div class="pdf-section-title">Summary</div>
+                <div id="pdf-summary-text" style="font-size:10px;color:#444">
+                  This week I focused on three main areas: completed Q2 data model review,
+                  deployed a production hotfix, and advanced the dashboard redesign.
+                  One blocker remains on the vendor API integration.
+                </div>
+              </div>
+              <div class="pdf-entries-preview">
+                <div class="pdf-section-title">Entries by day</div>
+                <div id="pdf-entries-preview"></div>
+              </div>
+              <div class="pdf-stats-row">
+                <div class="pdf-stat" style="background:#f5f5f5">
+                  <div class="pdf-stat-num" id="pdf-s-total" style="color:#1a1a1a">12</div>
+                  <div class="pdf-stat-label">Total entries</div>
+                </div>
+                <div class="pdf-stat" style="background:#e8f5ee">
+                  <div class="pdf-stat-num" id="pdf-s-done" style="color:#0F6E56">8</div>
+                  <div class="pdf-stat-label">Completed</div>
+                </div>
+                <div class="pdf-stat" style="background:#fff3e0">
+                  <div class="pdf-stat-num" id="pdf-s-block" style="color:#E24B4A">1</div>
+                  <div class="pdf-stat-label">Blocked</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="hint" id="pdf-status" style="margin-top:8px">Last auto-export: Not yet — next scheduled Friday 15 May at 17:00</p>
+      </div>
+
+      <!-- PANEL: SCHEDULE -->
+      <div class="panel" id="panel-sched">
+        <p class="sched-intro">Control when WeekLog prompts you to log and when it publishes the PDF report.</p>
+
+        <div class="sched-row">
+          <div>
+            <div class="sched-label">Friday EOD PDF auto-publish</div>
+            <div class="sched-sub">Generates and emails PDF at 17:00 every Friday</div>
+          </div>
+          <button class="toggle on" aria-label="Toggle Friday auto-publish"></button>
+        </div>
+        <div class="sched-row">
+          <div>
+            <div class="sched-label">Email to manager on publish</div>
+            <div class="sched-sub">manager@company.co.za</div>
+          </div>
+          <button class="toggle on" aria-label="Toggle email to manager"></button>
+        </div>
+        <div class="sched-row">
+          <div>
+            <div class="sched-label">Morning log prompt</div>
+            <div class="sched-sub">Daily reminder at 9:00 AM</div>
+          </div>
+          <button class="toggle on" aria-label="Toggle morning prompt"></button>
+        </div>
+        <div class="sched-row">
+          <div>
+            <div class="sched-label">End-of-day recap prompt</div>
+            <div class="sched-sub">Daily reminder at 4:30 PM</div>
+          </div>
+          <button class="toggle on" aria-label="Toggle EOD prompt"></button>
+        </div>
+        <div class="sched-row">
+          <div>
+            <div class="sched-label">After-meeting log prompt</div>
+            <div class="sched-sub">Nudge 5 min after calendar events end</div>
+          </div>
+          <button class="toggle" aria-label="Toggle after-meeting prompt"></button>
+        </div>
+        <div class="sched-row">
+          <div>
+            <div class="sched-label">Slack DM on publish</div>
+            <div class="sched-sub">Also sends PDF link to your Slack</div>
+          </div>
+          <button class="toggle" aria-label="Toggle Slack DM"></button>
+        </div>
+      </div>
+
+    </div><!-- /scroll -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- App -->
+<script type="module" src="js/app.js"></script>
+
+</body>
+</html>
