@@ -4,6 +4,12 @@
    Palette: indigo-violet primary, emerald accent, amber warn
    ============================================================ */
 
+/* ============================================================
+   WeekLog — styles.css
+   Typeface: DM Sans (body) + DM Mono (meta)
+   Palette: indigo-violet primary, emerald accent, amber warn
+   ============================================================ */
+
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
 
 /* ── CSS variables ─────────────────────────────────────── */
@@ -657,3 +663,122 @@ input  { font-family: var(--font-sans); }
   .stat-grid { grid-template-columns: repeat(2, 1fr); }
   .day-strip { grid-template-columns: repeat(5, 1fr); }
 }
+
+/* ── Onboarding screen ───────────────────────────────────── */
+#onboarding {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #EEEDFE 0%, #F7F7FB 60%, #E1F5EE 100%);
+  padding: 20px;
+}
+
+.ob-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-md);
+}
+
+.ob-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.ob-logo-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background: var(--indigo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(127,119,221,.35);
+}
+.ob-logo-icon i { color: #fff; font-size: 16px; }
+.ob-logo-text { font-size: 17px; font-weight: 600; color: var(--text-primary); letter-spacing: -.02em; }
+
+.ob-heading {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  letter-spacing: -.02em;
+}
+
+.ob-sub {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.ob-form { display: flex; flex-direction: column; gap: 14px; }
+
+.ob-field { display: flex; flex-direction: column; gap: 5px; }
+
+.ob-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.ob-required { color: var(--danger); margin-left: 2px; }
+.ob-optional { color: var(--text-tertiary); font-weight: 400; }
+
+.ob-input {
+  padding: 10px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-family: var(--font-sans);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  width: 100%;
+}
+.ob-input::placeholder { color: var(--text-tertiary); }
+.ob-input:focus {
+  outline: none;
+  border-color: var(--indigo);
+  box-shadow: 0 0 0 3px rgba(127,119,221,.15);
+}
+
+.ob-error {
+  font-size: 12px;
+  color: var(--danger);
+  background: var(--danger-light);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ob-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 11px 16px;
+  background: var(--indigo);
+  border: none;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background var(--transition), transform .1s;
+  box-shadow: 0 2px 8px rgba(127,119,221,.3);
+}
+.ob-btn:hover  { background: var(--indigo-dark); }
+.ob-btn:active { transform: scale(.98); }
