@@ -1,7 +1,3 @@
-// ============================================================
-// WeekLog — js/app.js
-// ============================================================
-
 import { addEntry } from './data.js';
 import { renderEntries, renderWeekEntries, updateStats, renderPDFPreviewEntries, switchPanel, selectChip } from './ui.js';
 import { generateDraft } from './ai.js';
